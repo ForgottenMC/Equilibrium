@@ -26,7 +26,7 @@ group = "net.forgottenmc.equilibrium"
 val mainClass = "$group.Equilibrium"
 
 val log4jVersion: String by rootProject
-val hopliteVersion: String by rootProject
+val snakeyamlVersion: String by rootProject
 val dotenvVersion: String by rootProject
 
 
@@ -38,8 +38,7 @@ dependencies {
 
     // Config and ENV
     implementation("io.github.cdimascio:dotenv-java:$dotenvVersion")
-    implementation("com.sksamuel.hoplite:hoplite-core:$hopliteVersion")
-    implementation("com.sksamuel.hoplite:hoplite-yaml:$hopliteVersion")
+    implementation("org.yaml:snakeyaml:$snakeyamlVersion")
 
     // Logging
     implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
