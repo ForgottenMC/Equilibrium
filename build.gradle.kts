@@ -28,10 +28,20 @@ val mainClass = "$group.Equilibrium"
 val log4jVersion: String by rootProject
 val snakeyamlVersion: String by rootProject
 val dotenvVersion: String by rootProject
-
+val mysqlDriverVersion: String by rootProject
+val hikariCPVersion: String by rootProject
+val jdaVersion: String by rootProject
+val jdaUtilsVersion: String by rootProject
+val botCommonsVersion: String by rootProject
+val lavaPlayerVersion: String by rootProject
 
 repositories {
+    jcenter()
     mavenCentral()
+    maven {
+        name="m2-dv8tion"
+        url=uri("https://m2.dv8tion.net/releases")
+    }
 }
 
 dependencies {
@@ -40,9 +50,19 @@ dependencies {
     implementation("io.github.cdimascio:dotenv-java:$dotenvVersion")
     implementation("org.yaml:snakeyaml:$snakeyamlVersion")
 
+    // JDA And stuff
+    implementation("net.dv8tion:JDA:$jdaVersion")
+    implementation("com.jagrosh:jda-utilities:$jdaUtilsVersion")
+    implementation("me.duncte123:botCommons:$botCommonsVersion")
+    implementation("com.sedmelluq:lavaplayer:$lavaPlayerVersion")
+
     // Logging
     implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
+
+    // Database
+    implementation("com.zaxxer:HikariCP:$hikariCPVersion")
+    implementation("mysql:mysql-connector-java:$mysqlDriverVersion")
 }
 
 
