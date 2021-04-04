@@ -13,10 +13,60 @@
 
 package net.forgottenmc.equilibrium;
 
+import me.duncte123.botcommons.messaging.EmbedUtils;
+import me.duncte123.botcommons.web.WebUtils;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
+import net.forgottenmc.equilibrium.config.Config;
+
+import javax.security.auth.login.LoginException;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Equilibrium {
 
-    public static void main(String ...args) {
 
+    private  Equilibrium() throws LoginException, IOException {
+
+        File env = new File("./.env");
+
+        if (!env.exists()) {
+            env.createNewFile();
+
+            FileWriter writer = new FileWriter(env);
+            writer.write("token= \n" +
+                    "prefix=E!");
+            writer.flush();
+            writer.close();
+        }
+
+        WebUtils.setUserAgent("I am a bot");
+        EmbedUtils.setEmbedBuilder(
+                () -> new EmbedBuilder()
+                        .setColor(0x3883d9)
+        );
+
+        Listener listener = new Listener();
+
+        DefaultShardManagerBuilder.createDefault(
+                Config.get("token"),
+                GatewayIntent.GUILD_MEMBERS,
+                GatewayIntent.DIRECT_MESSAGES,
+                GatewayIntent.GUILD_MESSAGE_REACTIONS,
+                GatewayIntent.GUILD_VOICE_STATES,
+                GatewayIntent.GUILD_MESSAGES,
+                GatewayIntent.GUILD_EMOJIS,
+                GatewayIntent.GUILD_PRESENCES)
+                .enableCache(CacheFlag.VOICE_STATE, CacheFlag.CLIENT_STATUS, CacheFlag.EMOTE, CacheFlag.MEMBER_OVERRIDES, CacheFlag.ROLE_TAGS)
+                .addEventListeners(listener)
+                .build();
+    }
+
+    public static void  main(String[] args) throws LoginException, IOException {
+        new Equilibrium();
     }
 
 }
